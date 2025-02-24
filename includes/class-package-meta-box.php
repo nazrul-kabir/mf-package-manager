@@ -35,7 +35,7 @@ class Package_Meta_Box {
         foreach ($fields as $field => $label) {
             $value = get_post_meta($post->ID, '_package_' . $field, true);
             ?>
-            <p>
+            <div class ="package-meta-box">
                 <label for="package_<?php echo $field; ?>"><?php echo $label; ?></label>
                 <?php if ($field === 'description' || $field === 'extra_free'): ?>
                     <textarea id="package_<?php echo $field; ?>" name="package_<?php echo $field; ?>" rows="3"><?php echo esc_textarea($value); ?></textarea>
@@ -47,7 +47,7 @@ class Package_Meta_Box {
                 <?php else: ?>
                     <input type="text" id="package_<?php echo $field; ?>" name="package_<?php echo $field; ?>" value="<?php echo esc_attr($value); ?>">
                 <?php endif; ?>
-            </p>
+            </div>
             <?php
         }
 

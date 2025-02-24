@@ -72,3 +72,27 @@ function package_manager_deactivate() {
     flush_rewrite_rules();
 }
 register_deactivation_hook(__FILE__, 'package_manager_deactivate');
+
+// Enqueue styles
+function enqueue_package_manager_styles($hook) {
+    global $post_type;
+    if ($hook == 'post.php' || $hook == 'post-new.php') {
+        if ($post_type == 'package') {
+            wp_enqueue_style(
+                'package-manager-styles',
+                plugin_dir_url(__FILE__) . 'assets/css/package-manager-styles.css',
+                array(),
+                '1.0.0',
+                'all'
+            );
+        }
+    }
+}
+add_action('admin_enqueue_scripts', 'enqueue_package_manager_styles');
+
+// Enqueue scripts
+function enqueue_package_manager_scripts() {
+    wp_enqueue_script('package-manager-script', plugin_dir_url(__FILE__) . 'assets/js/package-manager-script.js', array('jquery'), '1.0', true);
+    wp_localize_script('package-manager-script', 'package_ajax', array('ajaxurl' => admin_url('admin-ajax.php')));
+}
+add_action('wp_enqueue_scripts', 'enqueue_package_manager_scripts');

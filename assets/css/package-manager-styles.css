@@ -1,0 +1,13 @@
+.package-meta-box input[type="text"],
+.package-meta-box input[type="number"],
+.package-meta-box select,
+.package-meta-box textarea {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+.package-meta-box label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
