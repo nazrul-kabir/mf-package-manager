@@ -46,10 +46,25 @@ add_action('plugins_loaded', 'package_manager_init');
 
 // Activation hook
 function package_manager_activate() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'package_postcode_ranges';
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        package_id bigint(20) NOT NULL,
+        postcode_range varchar(255) NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+
     // Flush rewrite rules
     flush_rewrite_rules();
 }
 register_activation_hook(__FILE__, 'package_manager_activate');
+
 
 // Deactivation hook
 function package_manager_deactivate() {
